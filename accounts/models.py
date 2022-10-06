@@ -3,7 +3,9 @@ from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 
 
+# model for superadmin
 class MyAccountManager(BaseUserManager):
+    # function for creating normal user
     def create_user(self, first_name, last_name, username, email, password=None):
         if not email:
             raise ValueError('User must have an email address')
@@ -22,6 +24,7 @@ class MyAccountManager(BaseUserManager):
         user.save(using=self._db)
         return user
 
+    # function for creating superuser
     def create_superuser(self, first_name, last_name, email, username, password):
         user = self.create_user(
             email=self.normalize_email(email),
@@ -57,6 +60,7 @@ class Accounts(AbstractBaseUser):
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['username', 'first_name', 'last_name']
 
+    # to tell Accounts model that which model we're using to create user/superuser
     ojects = MyAccountManager()
 
     # to change from Acountss to Acounts in django-admin

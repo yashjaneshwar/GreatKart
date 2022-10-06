@@ -72,6 +72,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'greatKart.wsgi.application'
 
+# to tell settings that we're going to use custom user model
 AUTH_USER_MODEL = 'accounts.Accounts'
 
 
