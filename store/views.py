@@ -1,3 +1,4 @@
+from tkinter import E
 from django.shortcuts import get_object_or_404, render
 
 from category.models import Category
@@ -32,4 +33,14 @@ def store(request, category_slug=None):
 	return render(request, 'store/store.html', context)
 
 def product_detail(request, category_slug, product_slug):
-	return render(request, 'store/product_detail.html')
+	# first we need to get category of product, category is present in store app model and slug is present is category app model
+	# here we are accessing category of product as a slugfield type so we use category__slug
+	try:
+		single_product = Product.objects.get(category__slug = category_slug, slug = product_slug)
+	except Exception as e:
+		raise e 
+	
+	context = {
+		'single_product': single_product,
+	}
+	return render(request, 'store/product_detail.html', context)
